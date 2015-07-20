@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Angular Material - Starter App</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <!--<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,700'>-->
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="assets/app.css"/>
+
+</head>
+
+
+<body ng-app="starterApp" layout="column">
+
+<md-toolbar ng-controller="AppCtrl" layout="row">
+
+    <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
+        <md-icon md-svg-icon="img/icons/adjust.svg"></md-icon>
+    </md-button>
+    <h1>Network Explorer</h1>
+
+    <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleRight()">
+        <md-icon md-svg-icon="img/icons/editor.svg"></md-icon>
+    </md-button>
+</md-toolbar>
+
+<md-content id="halfviz" ng-controller="AppCtrl" layout="row" flex>
+
+
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Graph Tuner</h1>
+        </md-toolbar>
+
+        <div>
+            <md-content class="md-padding">
+                <md-tabs >
+                    <md-tab label="CONTENT">
+                        <md-content class="md-padding">
+                            <h1 class="md-display-1">Content</h1>
+
+
+                            <div layout="column">
+                                <div flex="10" layout layout-align="center center">
+                                    <span class="md-body-1">Network1 Lower Bound</span>
+                                </div>
+                                <div layout="row">
+                                    <md-slider flex min="0" max="1" step="0.0001" ng-model="color.red1" aria-label="red" id="red-slider" class>
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input type="number" ng-model="color.red1" aria-label="red" aria-controls="red-slider">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div layout="column">
+                                <div flex="10" layout layout-align="center center">
+                                    <span class="md-body-1">Network2 Lower Bound</span>
+                                </div>
+                                <div layout="row">
+                                    <md-slider flex min="0" max="1" step="0.0001" ng-model="color.red2" aria-label="red"  class>
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input type="number" ng-model="color.red2" aria-label="red" aria-controls="red-slider">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div layout="column">
+                                <div flex="10" layout layout-align="center center">
+                                    <span class="md-body-1">Network1 Degree</span>
+                                </div>
+                                <div layout="row">
+                                    <md-slider flex min="0" max="100" step="1" ng-model="color.red3" aria-label="blue"  class>
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input type="number" ng-model="color.red3" aria-label="blue" aria-controls="blue-slider">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div layout="column">
+                                <div flex="10" layout layout-align="center center">
+                                    <span class="md-body-1">Network2 Degree</span>
+                                </div>
+                                <div layout="row">
+                                    <md-slider flex min="0" max="100" step="11" ng-model="color.red4" aria-label="blue"  class>
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input type="number" ng-model="color.red4" aria-label="blue" aria-controls="blue-slider">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div layout="column">
+                                <div flex="10" layout layout-align="center center">
+                                    <span class="md-body-1">Similarity lower bound</span>
+                                </div>
+                                <md-slider flex ng-model="color.blue" min="0" max="0.2" step="0.0001" aria-label="blue" id="blue-slider" class="md-primary">
+                                </md-slider>
+                                <div flex="20" layout layout-align="center center">
+                                    <input type="number" ng-model="color.blue" aria-label="blue" aria-controls="blue-slider">
+                                </div>
+                            </div>
+
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="system">
+                        <md-content class="md-padding">
+                            <h1 class="md-display-1">System</h1>
+
+                        </md-content>
+                    </md-tab>
+
+                </md-tabs>
+            </md-content>
+        </div>
+    </md-sidenav>
+
+
+
+
+    <md-whiteframe ng-controller="graphCtrl" flex class="md-whiteframe-z2" layout-margin layout="row" layout-align="space-around center">
+
+
+        <canvas  id="viewport"  width="1200" height="800" ></canvas>
+
+
+
+        <md-card  flex="33" id="detail-card">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools title"></h1>
+            </md-toolbar>
+            <md-content class="content">
+
+                <h2 class="subtitle">The tag similarity graph accounts for the user similarity.</h2>
+
+                <div class="panel" id="detail">
+                    <!-- dg for detailed graph-->
+                    <svg id="dg"></svg>
+
+                </div>
+            </md-content>
+        </md-card>
+
+    </md-whiteframe>
+
+
+
+
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Graph Editor</h1>
+        </md-toolbar>
+        <md-content  layout-padding>
+            <md-input-container flex="">
+                <!--<label >Edit the graph</label>-->
+
+
+                <textarea id="code" ng-model="data.code" columns="1" ></textarea>
+
+
+
+            </md-input-container>
+        </md-content>
+    </md-sidenav>
+
+
+
+</md-content>
+
+<script src="./bower_components/angular/angular.js"></script>
+<script src="./bower_components/angular-animate/angular-animate.js"></script>
+<script src="./bower_components/angular-aria/angular-aria.js"></script>
+<script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
+
+
+
+<script src="lib/jquery-1.6.1.min.js"></script>
+<script src="lib/jquery.address-1.4.min.js"></script>
+<script src="lib/arbor.js"></script>
+<script src="lib/graphics.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+
+<!--for debug use-->
+<script src="src/debug.js"></script>
+
+<!-- the halfviz source, broken out one ‘class’ per file -->
+
+<script src="src/dashboard.js"></script>
+<!--<script src="src/help.js"></script>-->
+<script src="src/io.js"></script>
+
+<script src="src/parseur.js"></script>
+<script src="src/renderer.js"></script>
+
+<!-- the main driver code: start here -->
+<script src="src/halfviz.js"></script>
+
+<script type="text/javascript" src="app.js"></script>
+
+
+
+</body>
+</html>
+

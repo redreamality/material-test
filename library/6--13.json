@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "name": "or123ange",
+      "group": "1"
+    },
+    {
+      "name": "apple",
+      "group": "1"
+    },
+    {
+      "name": "banana",
+      "group": "2"
+    },
+    {
+      "name": "toadfm123ato",
+      "group": "2"
+    },    {
+      "name": "aasdfpple",
+      "group": "1"
+    },
+    {
+      "name": "baadfnana",
+      "group": "2"
+    },
+    {
+      "name": "tom12adf3ato",
+      "group": "2"
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "target": 2,
+      "value": 10
+    },
+    {
+      "source": 1,
+      "target": 2,
+      "value": 5
+    },
+    {
+      "source": 1,
+      "target": 3,
+      "value": 2
+    }
+  ]
+}
+    
+    

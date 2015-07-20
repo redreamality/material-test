@@ -1,0 +1,205 @@
+{
+  "directed": false,
+  "graph": [],
+  "nodes": [
+    {
+      "group": 2,
+      "id": "phones"
+    },
+    {
+      "group": 2,
+      "id": "fights"
+    },
+    {
+      "group": 1,
+      "id": "second"
+    },
+    {
+      "group": 1,
+      "id": "asleep"
+    },
+    {
+      "group": 2,
+      "id": "earth"
+    },
+    {
+      "group": 2,
+      "id": "counts"
+    },
+    {
+      "group": 1,
+      "id": "headaches"
+    },
+    {
+      "group": 2,
+      "id": "migraine"
+    },
+    {
+      "group": 1,
+      "id": "slept"
+    },
+    {
+      "group": 2,
+      "id": "radiation"
+    },
+    {
+      "group": 2,
+      "id": "legal"
+    },
+    {
+      "group": 2,
+      "id": "ph"
+    },
+    {
+      "group": 2,
+      "id": "pharmacist"
+    },
+    {
+      "group": 2,
+      "id": "momentum"
+    },
+    {
+      "group": 2,
+      "id": "woman"
+    },
+    {
+      "group": 2,
+      "id": "means"
+    },
+    {
+      "group": 2,
+      "id": "insomnia"
+    },
+    {
+      "group": 1,
+      "id": "glass"
+    },
+    {
+      "group": 1,
+      "id": "wrong"
+    },
+    {
+      "group": 1,
+      "id": "teacher"
+    },
+    {
+      "group": 2,
+      "id": "bible"
+    },
+    {
+      "group": 1,
+      "id": "pressure"
+    },
+    {
+      "group": 2,
+      "id": "average"
+    },
+    {
+      "group": 1,
+      "id": "fighting"
+    },
+    {
+      "group": 2,
+      "id": "homework"
+    },
+    {
+      "group": 2,
+      "id": "pharmacies"
+    },
+    {
+      "group": 1,
+      "id": "hello"
+    },
+    {
+      "group": 2,
+      "id": "comes"
+    },
+    {
+      "group": 2,
+      "id": "laws"
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "target": 26,
+      "weight": 0.9346683457082942
+    },
+    {
+      "source": 1,
+      "target": 23,
+      "weight": 0.7677836118139244
+    },
+    {
+      "source": 2,
+      "target": 13,
+      "weight": 0.7685715998840896
+    },
+    {
+      "source": 3,
+      "target": 16,
+      "weight": 0.9334954966482896
+    },
+    {
+      "source": 4,
+      "target": 21,
+      "weight": 0.7661760522294964
+    },
+    {
+      "source": 5,
+      "target": 27,
+      "weight": 0.7677224289948716
+    },
+    {
+      "source": 6,
+      "target": 7,
+      "weight": 0.9296237227727676
+    },
+    {
+      "source": 8,
+      "target": 16,
+      "weight": 0.9334954966482896
+    },
+    {
+      "source": 9,
+      "target": 17,
+      "weight": 0.9346289641344384
+    },
+    {
+      "source": 10,
+      "target": 18,
+      "weight": 0.9351731467050332
+    },
+    {
+      "source": 11,
+      "target": 17,
+      "weight": 0.9319497840185472
+    },
+    {
+      "source": 12,
+      "target": 25,
+      "weight": 0.9336568353246686
+    },
+    {
+      "source": 14,
+      "target": 20,
+      "weight": 0.7658357082276808
+    },
+    {
+      "source": 15,
+      "target": 22,
+      "weight": 0.7655048350876407
+    },
+    {
+      "source": 18,
+      "target": 28,
+      "weight": 0.9351731467050332
+    },
+    {
+      "source": 19,
+      "target": 24,
+      "weight": 0.7673340131175725
+    }
+  ],
+  "multigraph": false
+}
