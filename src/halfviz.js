@@ -4,8 +4,8 @@
 // instantiates all the helper classes, sets up the particle system + renderer
 // and maintains the canvas/editor splitview
 //
-(function(){
-  
+//(function(){
+
   trace = arbor.etc.trace
   objmerge = arbor.etc.objmerge
   objcopy = arbor.etc.objcopy
@@ -48,7 +48,7 @@
       io:IO("#editor"),
 
       init:function(){
-        
+
         $(window).resize(that.resize)
         that.resize()
 
@@ -61,7 +61,7 @@
         //$(that.io).bind('clear', that.newDoc)
         return that
       },
-      
+
       getDoc:function(e){
         $.getJSON('library/'+e.id+'.json', function(doc){
 
@@ -78,7 +78,7 @@
           that.resize()
           _editing = false
         })
-        
+
       },
 
       //newDoc:function(){
@@ -118,9 +118,9 @@
         })
         sys.merge(network)
         _updateTimeout = null
-        //sys.renderer.redraw()
+        sys.renderer.redraw()
       },
-      
+
       resize:function(){
         var w = $(window).width()*2/3-32
         var h = $(window).height()
@@ -176,13 +176,13 @@
       }
     }
 
-    return that.init()    
+    return that.init()
   }
 
 
-  $(document).ready(function(){
-    var mcp = HalfViz("#halfviz")  //
-  })
-
-  
-})()
+  //$(document).ready(function(){
+  //  var mcp = HalfViz("#halfviz")  //
+  //})
+//
+//
+//})()

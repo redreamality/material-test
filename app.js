@@ -1,15 +1,25 @@
 /**
  * Created by xie on 2015/7/15.
  */
+var log = function (msg) {
+    console.log(msg);
+    var that = {
+        hello: function () {
+            console.log('inside hello')
+        }
+    }
+    return that
+}
+
 
 var myapp = angular.module('starterApp', ['ngMaterial']);
 
-//myapp.factory('globalFunctions', function() {
-//    return {
-//        log:log
-//        //hv: Halfviz("#halfviz")
-//    };
-//});
+myapp.factory('globalFunctions', function() {
+    return {
+        log:log,
+        hv: HalfViz("#halfviz")
+    };
+});
 
 
 //angular.element(document).ready(function ($scope) {
@@ -19,7 +29,7 @@ var myapp = angular.module('starterApp', ['ngMaterial']);
 
 
 
-myapp.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil) {
+myapp.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil,globalFunctions) {
 
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
@@ -45,9 +55,9 @@ myapp.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil) {
     };
     $scope.code=""
 
-    //$scope.change = function(globalFunctions) {
-    //    globalFunctions['log'].call('aah')
-    //};
+    $scope.change = function() {
+        globalFunctions['hv'].updateGraph()
+    };
 
 }
 //]
@@ -78,7 +88,7 @@ myapp.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil) {
 //})
 
 
-myapp.run();
+//myapp.run();
 
 
 //
