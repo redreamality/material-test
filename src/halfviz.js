@@ -26,7 +26,7 @@
     })
 
 
-    sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
+    sys.renderer = Renderer("#viewport") // our newly created renderer will have its .() method called shortly by sys...
     sys.screenPadding(20)
 
     var _ed = dom.find('#editor')
@@ -118,7 +118,7 @@
         })
         sys.merge(network)
         _updateTimeout = null
-        sys.renderer.redraw()
+        //sys.renderer.redraw()
       },
       
       resize:function(){
@@ -181,7 +181,7 @@
 
 
   $(document).ready(function(){
-    var mcp = HalfViz("#halfviz")
+    var mcp = HalfViz("#halfviz")  //
   })
 
   
