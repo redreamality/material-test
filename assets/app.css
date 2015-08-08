@@ -78,6 +78,9 @@ md-toolbar h1 {
   -moz-transform:scale(0.70);
 }
 
+.md-padding .md-default-theme {
+  overflow: hidden;
+}
 
 md-bottom-sheet  md-icon {
   margin-right:20px;

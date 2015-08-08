@@ -124,7 +124,7 @@
           var color = edge.data.color
           var sg = edge.source.data.g
           var tg = edge.target.data.g
-
+          //var n1l = $("#n1l")
 
           //choose edge color
           var choose_color = (color) ?

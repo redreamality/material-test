@@ -20,10 +20,11 @@ angular
             return debounceFn;
         }
 
-        $scope.color = {
-            red: Math.floor(Math.random() ),
-            green: Math.floor(Math.random()),
-            blue: Math.floor(Math.random() )
+        $scope.settings = {
+            n1l:0.29,
+            n2l:0.45,
+            n1d:20,
+            n2d:43
         };
 
 
