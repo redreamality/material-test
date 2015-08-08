@@ -1,12 +1,31 @@
 (function(){
   
   Renderer = function(canvas){
+
+
     var canvas = $(canvas).get(0)
     var ctx = canvas.getContext("2d")
     var gfx = arbor.Graphics(canvas)
     var particleSystem = null
+    //var n1l = $("#n1l")
+    //console.log(n1l)
+
+
+
+
+
+    //console.log(n2l.value)
 
     var that = {
+
+      dic :{
+        n1l:0.29,
+        n2l:0.45,
+        n1d:20,
+        n2d:43,
+        nsim:0.0776
+      },
+
       init:function(system){
         particleSystem = system
         particleSystem.screenSize(canvas.width, canvas.height) 
@@ -19,9 +38,10 @@
       redraw:function(){
         if (!particleSystem) return
 
+
+
         //particleSystem.screenSize(canvas.width, canvas.height)
         particleSystem.screenPadding(40)
-        //console.log(canvas)
 
 
         gfx.clear() // convenience ƒ: clears the whole canvas rect
@@ -29,16 +49,15 @@
         // draw the nodes & save their bounds for edge drawing
         var nodeBoxes = {}
 
-
+        //window canvas
         var group_location_x = function (val,group) {
-
           var xf;
           switch(group){
             case 1:
               xf= function(val){return val/2}
               break;
             case 2:
-              xf=function(val){return canvas.width/2+val/2}//window
+              xf=function(val){return $(window).width()/3+val/2}//window
               break;
             default:
               xf=function(val){return val}
@@ -46,7 +65,6 @@
           return xf(val,group)
 
         }
-
         var palette = {
           0:"rgba(0,133,115,0.5)",//green
 
@@ -57,8 +75,7 @@
           999:"rgba(0,0,0,.2)"
         }
 
-
-
+        // draw the nodes
         particleSystem.eachNode(function(node, pt){
           // node: {mass:#, p:{x,y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
@@ -120,11 +137,27 @@
           // pt1:  {x:#, y:#}  source position in screen coords
           // pt2:  {x:#, y:#}  target position in screen coords
 
-          var weight = edge.data.weight*edge.data.weight*40
+
+          var origin_weight = edge.data.weight
+          var weight = origin_weight*origin_weight*40
           var color = edge.data.color
           var sg = edge.source.data.g
           var tg = edge.target.data.g
-          //var n1l = $("#n1l")
+          var dic =that.dic
+
+
+
+          //lower bound of weights
+          if(sg==tg&&sg==1){
+            if(origin_weight<dic["n1l"]) return true
+          }else if (sg==tg&&sg==2){
+
+            if(origin_weight<dic["n2l"]) return true
+          }else if(sg!=tg){
+            if(origin_weight<dic["nsim"]) return true
+          }
+
+
 
           //choose edge color
           var choose_color = (color) ?
@@ -199,8 +232,8 @@
 
 
             _mouseP = arbor.Point(
-                ((e.pageX-pos.left)<$(window).width()/3+32)?
-                ((e.pageX-pos.left)*2):((e.pageX-pos.left)-$(window).width()/3+32)*2
+                ((e.pageX-pos.left)<$(window).width()/3)?
+                ((e.pageX-pos.left)*2):((e.pageX-pos.left)-$(window).width()/3)*2
                 , e.pageY-pos.top)
 
             selected = nearest = dragged = particleSystem.nearest(_mouseP);//change here to _mouseP/2(or bias+_mouseP/2) depending on which half mouse is in
@@ -229,7 +262,7 @@
 
             var color = d3.scale.category20b();
 
-            console.log(selected_edge)
+            //console.log(selected_edge)
 
             var width = $(window).width()/3,
                 height = 600;
@@ -251,84 +284,88 @@
 
             d3.json("library/"+selected_edge+".json", function (error, graph) {
 
-              console.log(error)
+              //console.log(error)
+              if(error){// didn't function well, don't know why, check back later.
+                return
+              }else{// to do: stop refreshing when selected edges have no XX-XX.JSON file.
 
-              //console.log("graph.nodes", graph.nodes)
-              //console.log("graph.links", graph.links)
+                //console.log("graph.nodes", graph.nodes)
+                //console.log("graph.links", graph.links)
 
-              // start force layout
-              force.nodes(graph.nodes).links(graph.links).start();
+                // start force layout
+                force.nodes(graph.nodes).links(graph.links).start();
 
-              var link = svg.
-                  selectAll(".link")
-                  .data(graph.links)
-                  .enter().append("line")
-                  .attr("class", "link")
-                  .style("stroke-width", function (d) {
-                    return d.weight*d.weight*d.weight*d.weight*10;
-                  });
+                var link = svg.
+                    selectAll(".link")
+                    .data(graph.links)
+                    .enter().append("line")
+                    .attr("class", "link")
+                    .style("stroke-width", function (d) {
+                      return d.weight*d.weight*d.weight*d.weight*10;
+                    });
 
-              var node = svg.selectAll('g.node')
-                  .data(graph.nodes)
-                  .enter()
-                  .append('svg:g')
-                  .attr('class', 'node')
-                  .call(force.drag)
-              var circles = node.append('circle')
-                  .attr("r", 14)
-                  .style("fill", function (d) {
-                    return color(d.group);
-                  });
-              var texts = node.append('svg:text')
-                  .attr("dx", 16)
-                  .attr("dy", ".35em")
-                  .text(function (d) {
-                    return d.id
-                  });
-              node.append("title").text(function (d) {
-                return d.id;
-              });
-
-
-              force.on("tick", function () {
-                link.attr("x1", function (d) {
-                  return d.source.x;
-                }).attr("y1", function (d) {
-                  return d.source.y;
-                }).attr("x2", function (d) {
-                  return d.target.x;
-                }).attr("y2", function (d) {
-                  return d.target.y;
-                });
-
-                /*		circles.attr("cx", function(d) {
-                 return d.x;
-                 }).attr("cy", function(d) {
-                 return d.y;
-                 });
-                 texts.attr("cx", function(d) {
-                 return d.x;
-                 }).attr("cy", function(d) {
-                 return d.y;
-                 });
-                 */
-                node.attr("transform", function (d) {
-                  var x = d.x,
-                      y = d.y;
-                  if (x > 100 && d.group == '1') {
-                    x = 100
-                    d.x = x
-                  }
-                  if (x < 300 && d.group == '2') {
-                    x = 300
-                    d.x = x
-                  }
-
-                  return "translate(" + x + "," + y + ")";
+                var node = svg.selectAll('g.node')
+                    .data(graph.nodes)
+                    .enter()
+                    .append('svg:g')
+                    .attr('class', 'node')
+                    .call(force.drag)
+                var circles = node.append('circle')
+                    .attr("r", 14)
+                    .style("fill", function (d) {
+                      return color(d.group);
+                    });
+                var texts = node.append('svg:text')
+                    .attr("dx", 16)
+                    .attr("dy", ".35em")
+                    .text(function (d) {
+                      return d.id
+                    });
+                node.append("title").text(function (d) {
+                  return d.id;
                 });
 
 
-              });
+                force.on("tick", function () {
+                  link.attr("x1", function (d) {
+                    return d.source.x;
+                  }).attr("y1", function (d) {
+                    return d.source.y;
+                  }).attr("x2", function (d) {
+                    return d.target.x;
+                  }).attr("y2", function (d) {
+                    return d.target.y;
+                  });
+
+                  /*		circles.attr("cx", function(d) {
+                   return d.x;
+                   }).attr("cy", function(d) {
+                   return d.y;
+                   });
+                   texts.attr("cx", function(d) {
+                   return d.x;
+                   }).attr("cy", function(d) {
+                   return d.y;
+                   });
+                   */
+                  node.attr("transform", function (d) {
+                    var x = d.x,
+                        y = d.y;
+                    if (x > 100 && d.group == '1') {
+                      x = 100
+                      d.x = x
+                    }
+                    if (x < 300 && d.group == '2') {
+                      x = 300
+                      d.x = x
+                    }
+
+                    return "translate(" + x + "," + y + ")";
+                  });
+
+
+                });
+              }//from else
             });
 
 
@@ -347,8 +384,8 @@
             var old_nearest = nearest && nearest.node._id
             var pos = $(canvas).offset();
             var s = arbor.Point(
-                ((e.pageX-pos.left)<$(window).width()/3+32)?
-                    ((e.pageX-pos.left)*2):((e.pageX-pos.left)-$(window).width()/3+32)*2
+                ((e.pageX-pos.left)<$(window).width()/3)?
+                    ((e.pageX-pos.left)*2):((e.pageX-pos.left)-$(window).width()/3)*2
                 , e.pageY-pos.top)
 
             if (!nearest) return

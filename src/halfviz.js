@@ -38,7 +38,11 @@
     var _current = null // will be the id of the doc if it's been saved before
     var _editing = false // whether to undim the Save menu and prevent navigating away
     var _failures = null
-    
+
+    var _n1l=dom.find('#n1l')
+
+
+
     var that = {
       dashboard:Dashboard("#dashboard", sys),
       io:IO("#editor"),
@@ -90,11 +94,31 @@
       updateGraph:function(e){
         var src_txt = _code.val()
         var network = parse(src_txt)
+
+        var n1l =$("#n1l").val()
+        var n2l =$("#n2l").val()
+        var n1d =$("#n1d").val()
+        var n2d =$("#n2d").val()
+        var nsim=$("#nsim").val()
+        var settings = {
+          n1l:n1l,
+          n2l:n2l,
+          n1d:n1d,
+          n2d:n2d,
+          nsim:nsim
+        }
+        //console.log(sys.renderer)
+        sys.renderer.dic = settings
+
+        console.log(settings)
+
+
         $.each(network.nodes, function(nname, ndata){
           if (ndata.label===undefined) ndata.label = nname
         })
         sys.merge(network)
         _updateTimeout = null
+        sys.renderer.redraw()
       },
       
       resize:function(){
@@ -157,7 +181,7 @@
 
 
   $(document).ready(function(){
-    var mcp = HalfViz("#halfviz")    
+    var mcp = HalfViz("#halfviz")
   })
 
   
