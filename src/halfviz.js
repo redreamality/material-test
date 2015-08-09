@@ -18,9 +18,9 @@
 
     sys = arbor.ParticleSystem({
       friction:.5,
-      stiffness:500,
-      repulsion:2600,
-      precision:0.1,
+      stiffness:0,
+      repulsion:150000,
+      precision:0.2,
       fps:60,
       dt:0.005,
     })
@@ -110,7 +110,7 @@
         //console.log(sys.renderer)
         sys.renderer.dic = settings
 
-        console.log(settings)
+        //console.log(settings)
 
 
         $.each(network.nodes, function(nname, ndata){

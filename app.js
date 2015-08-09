@@ -1,22 +1,22 @@
-/**
- * Created by xie on 2015/7/15.
- */
-var log = function (msg) {
-    console.log(msg);
-    var that = {
-        hello: function () {
-            console.log('inside hello')
-        }
-    }
-    return that
-}
+///**
+// * Created by xie on 2015/7/15.
+// */
+//var log = function (msg) {
+//    console.log(msg);
+//    var that = {
+//        hello: function () {
+//            console.log('inside hello')
+//        }
+//    }
+//    return that
+//}
 
 
 var myapp = angular.module('starterApp', ['ngMaterial']);
 
 myapp.factory('globalFunctions', function() {
     return {
-        log:log,
+        //log:log,
         hv: HalfViz("#halfviz")
     };
 });
@@ -47,11 +47,11 @@ myapp.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $mdUtil,glob
     }
 
     $scope.settings = {
-        n1l:0.29,
-        n2l:0.45,
+        n1l:0.21,
+        n2l:0.67,
         n1d:20,
         n2d:43,
-        nsim:0.0776
+        nsim:0.021
     };
     $scope.code=""
 

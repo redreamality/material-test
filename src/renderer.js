@@ -69,9 +69,9 @@
           0:"rgba(0,133,115,0.5)",//green
 
           //1:"#ae7bb3",
-            2:"rgba(80,229,249,0.9)",//blue
+            2:"rgba(80,229,249,0.6)",//blue
           //2:"rgba(106, 78, 90, 0.8)",//purple
-          1:"rgba(245, 88, 119, 0.9)",//red
+          1:"rgba(245, 88, 119, 0.6)",//red
           999:"rgba(0,0,0,.2)"
         }
 
@@ -115,18 +115,25 @@
             gfx.oval(pt.x-w/2, pt.y-w/2, w,w, {fill:ctx.fillStyle})
             nodeBoxes[node.name] = [pt.x-w/2, pt.y-w/2, w,w]
           }else{
-            gfx.rect(pt.x-w/2, pt.y-10, w+20,30, 10, {fill:ctx.fillStyle})
+            //gfx.rect(pt.x-w/2, pt.y-10, w+20,30, 10, {fill:ctx.fillStyle})
+            gfx.rect(pt.x-w/2, pt.y-5, w+8,15, 5, {fill:ctx.fillStyle})
+
             nodeBoxes[node.name] = [pt.x-w/2, pt.y-11, w, 22]
+
+
           }
 
           // draw the text
           if (label){
-            ctx.font = "28px Helvetica"
+            //ctx.font = "28px Helvetica"
+            ctx.font = "14px Helvetica"
             ctx.textAlign = "center"
             ctx.fillStyle = "white"
             if (node.data.color=='none') ctx.fillStyle = '#333333'
-            ctx.fillText(label||"", pt.x+10, pt.y+15)
-            ctx.fillText(label||"", pt.x+10, pt.y+15)
+            //ctx.fillText(label||"", pt.x+10, pt.y+15)
+            //ctx.fillText(label||"", pt.x+10, pt.y+15)
+            ctx.fillText(label||"", pt.x+5, pt.y+7)
+            ctx.fillText(label||"", pt.x+5, pt.y+7)
           }
         })
 
@@ -139,7 +146,7 @@
 
 
           var origin_weight = edge.data.weight
-          var weight = origin_weight*origin_weight*40
+          var weight = Math.pow(origin_weight,1/4)*10
           var color = edge.data.color
           var sg = edge.source.data.g
           var tg = edge.target.data.g
@@ -245,7 +252,7 @@
 
 
 
-            //==============handling the node clicking show detail==============
+            //==============handling the node clicking show detail in arbor==============
             var near_edges = $.merge(sys.getEdgesFrom(  dragged.node),sys.getEdgesTo(  dragged.node))
             var selected_edges = null
             //console.log(near_edges)
@@ -301,7 +308,7 @@
                     .enter().append("line")
                     .attr("class", "link")
                     .style("stroke-width", function (d) {
-                      return d.weight*d.weight*d.weight*d.weight*10;
+                      return d.weight*d.weight*10;
                     });
 
                 var node = svg.selectAll('g.node')
@@ -319,10 +326,10 @@
                     .attr("dx", 16)
                     .attr("dy", ".35em")
                     .text(function (d) {
-                      return d.id
+                      return d.name
                     });
                 node.append("title").text(function (d) {
-                  return d.id;
+                  return d.name;
                 });
 
 
@@ -351,11 +358,11 @@
                   node.attr("transform", function (d) {
                     var x = d.x,
                         y = d.y;
-                    if (x > 100 && d.group == '1') {
+                    if (x > 100 && d.g == '1') {
                       x = 100
                       d.x = x
                     }
-                    if (x < 300 && d.group == '2') {
+                    if (x < 300 && d.g == '2') {
                       x = 300
                       d.x = x
                     }
